@@ -1,8 +1,16 @@
 # iCopy v0.2 CHANGELOG
 
+## version 0.2.1-Post.5  
+
++ Fixbugs:
+  + FIXBUG : local variable assignment error
+  + FIXBUG : dict error
+  + FIXBUG : SQL Error
+
 ## version 0.2.1-beta.1  
 
-NOTICE : Please replace the old "conf.toml" with the new one."conf.[web]dashboard" is the switch of WEB Service.( 0 = Off, 1 = On )  
+NOTICE : Please replace the old "conf.toml" with the new one."conf.[web]dashboard" is the switch of WEB Service.conf.[web]port is the WEB service port.  
+( 0 = Off, 1 = On )  
 Default Account&Password : admin,admin  
 Upgrade method :  
 

@@ -211,6 +211,7 @@ def taskill(update, context):
         update.effective_message.reply_text(_text[_lang]["global_command_error"])
 
 def getIDbypath(dst_id, src_name):
+    global count
     if count < 10:
         try:
             dst_endpoint_id = _gd.get_dst_endpoint_id(_gd(), dst_id, src_name)
@@ -218,7 +219,7 @@ def getIDbypath(dst_id, src_name):
                 dst_endpoint_link = r"https://drive.google.com/open?id={}".format(
                     dst_endpoint_id['id']
                 )
-                dst_info = {"dst_endpoint_id['id']":dst_endpoint_id['id'],"dst_endpoint_link":dst_endpoint_link,"linkstatus":True}
+                dst_info = {"dst_endpoint_id":dst_endpoint_id['id'],"dst_endpoint_link":dst_endpoint_link,"linkstatus":True}
                 count = 0
                 return dst_info
 
@@ -227,7 +228,7 @@ def getIDbypath(dst_id, src_name):
             return getIDbypath(dst_id, src_name)
     
     else:
-        dst_info = {"dst_endpoint_id['id']":" ","dst_endpoint_link":" ","linkstatus":False}
+        dst_info = {"dst_endpoint_id":" ","dst_endpoint_link":" ","linkstatus":False}
         count = 0
         return dst_info
         
