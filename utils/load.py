@@ -20,7 +20,8 @@ _text = toml.load(_textFile_RAW)
 _lang = cfg["general"]["language"]
 
 ### ENABLED_USERS
-ENABLED_USERS = os.environ.get("ENABLED_USERS", f"{cfg['tg']['usr_id']}")
+USER_LIST = f"{cfg['tg']['usr_id']}".split(",")
+ENABLED_USERS = os.environ.get("ENABLED_USERS", USER_LIST)
 
 ### Mongodb
 user = parse.quote_plus(f"{cfg['database']['db_user']}")
