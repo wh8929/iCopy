@@ -160,7 +160,7 @@ def main():
         CommandHandler(
             "restart",
             restart,
-            filters=Filters.user(user_id=int(load.cfg["tg"]["usr_id"])),
+            filters=Filters.user(user_id=[int(i) for i in load.USER_LIST]),
         )
     )
 
