@@ -80,7 +80,7 @@ def task_buffer(ns):
 
             task_process(chat_id, command, task, ns, src_name)
 
-            move_log(file_name)
+            move_log()
 
             ns.x = 0
 
@@ -94,13 +94,15 @@ def task_buffer(ns):
 
         time.sleep(5)
 
-def move_log(file_name):
+def move_log():
     cloner = _cfg["general"]["cloner"]
     option = "move"
     remote = _cfg["general"]["remote"]
+    path = "./"
     log_folder = _cfg["general"]["log_folder_id"]
     dst_block = remote + ":" + "{" + log_folder + "}"
-    command = [cloner, option, file_name, dst_block]
+    flags = "--included=*.log"
+    command = [cloner, option, path, dst_block, flags]
     run(command)
     print("Log Uploaded")
 
