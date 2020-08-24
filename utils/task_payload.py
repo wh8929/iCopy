@@ -412,12 +412,12 @@ def task_process(chat_id, command, task, ns, src_name):
                 + "\n\n"
                 + str(task_in_size_speed)
                 + "  |  "
-                + str(task_in_file_speed),
+                + str(task_in_file_speed)
+                + str(error),
                 "",
             )
             + "\n"
             + _text[_lang]["is_killed_by_user"],
-            + str(error),
             parse_mode=ParseMode.HTML,
             disable_web_page_preview=True,
         )
@@ -457,7 +457,7 @@ def task_process(chat_id, command, task, ns, src_name):
                 "",
             )
             + "\n"
-            + _text[_lang]["is_interrupted_error"],
+            + _text[_lang]["is_interrupted_error"]
             + str(error),
             parse_mode=ParseMode.HTML,
             disable_web_page_preview=True,
