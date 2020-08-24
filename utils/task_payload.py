@@ -37,6 +37,7 @@ interruption = 0
 dst_id = ""
 src_name = ""
 error = ""
+dst_endpoint_id = ""
 
 
 def task_buffer(ns):
@@ -146,7 +147,6 @@ def task_process(chat_id, command, task, ns, src_name):
             r"Transferred:[\s]+([\d.]+\s*)([kMGTP]?) / ([\d.]+[\s]?)([kMGTP]?Bytes),"
             r"\s*(?:\-|(\d+)\%),\s*([\d.]+\s*[kMGTP]?Bytes/s),\s*ETA\s*([\-0-9hmsdwy]+)"
         )
-        regex_error1 = (r"Error 403:")
 
         output = toutput
 
@@ -155,7 +155,6 @@ def task_process(chat_id, command, task, ns, src_name):
             task_total_size = re.search(regex_total_size, output)
             task_elapsed_time = re.findall(regex_elapsed_time, output)
             task_working_file = re.findall(regex_working_file, output)
-            task_error1 = re.findall(regex_error1, output)
 
             if task_total_files:
                 task_current_prog_num = task_total_files.group(1)
@@ -181,10 +180,6 @@ def task_process(chat_id, command, task, ns, src_name):
                 current_working_file = (
                     output.lstrip("*  ").rsplit(":")[0].rstrip("Transferred")
                 )
-
-            if task_error1:
-                global error
-                error = output.split("Error 403:")[1]
 
         global prog_bar
         prog_bar = _bar.status(0)
@@ -261,8 +256,6 @@ def task_process(chat_id, command, task, ns, src_name):
                     + "\n"
                     + "ETA : "
                     + str(task_eta_in_file)
-                    + "\n"
-                    + str(error),
                 ),
             ).start()
             old_working_line = current_working_line
@@ -413,9 +406,7 @@ def task_process(chat_id, command, task, ns, src_name):
                 + "\n\n"
                 + str(task_in_size_speed)
                 + "  |  "
-                + str(task_in_file_speed)
-                + "\n"
-                + str(error),
+                + str(task_in_file_speed),
                 "",
             )
             + "\n"
@@ -459,9 +450,7 @@ def task_process(chat_id, command, task, ns, src_name):
                 "",
             )
             + "\n"
-            + _text[_lang]["is_interrupted_error"]
-            + "\n"
-            + str(error),
+            + _text[_lang]["is_interrupted_error"],
             parse_mode=ParseMode.HTML,
             disable_web_page_preview=True,
         )
