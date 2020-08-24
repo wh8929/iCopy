@@ -260,8 +260,9 @@ def task_process(chat_id, command, task, ns, src_name):
                     + current_working_file[:30]
                     + "\n"
                     + "ETA : "
-                    + str(task_eta_in_file),
-                    + str(error)
+                    + str(task_eta_in_file)
+                    + "\n"
+                    + str(error),
                 ),
             ).start()
             old_working_line = current_working_line
@@ -413,6 +414,7 @@ def task_process(chat_id, command, task, ns, src_name):
                 + str(task_in_size_speed)
                 + "  |  "
                 + str(task_in_file_speed)
+                + "\n"
                 + str(error),
                 "",
             )
@@ -458,6 +460,7 @@ def task_process(chat_id, command, task, ns, src_name):
             )
             + "\n"
             + _text[_lang]["is_interrupted_error"]
+            + "\n"
             + str(error),
             parse_mode=ParseMode.HTML,
             disable_web_page_preview=True,
