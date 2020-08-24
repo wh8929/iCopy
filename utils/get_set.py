@@ -35,6 +35,7 @@ unpick_fav = []
 judge_folder_len = [28, 33]
 showlist = []
 showitem = ""
+showitem = ""
 
 
 @_r.restricted

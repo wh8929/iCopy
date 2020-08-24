@@ -37,7 +37,9 @@ min_sleep = "1ms" # customize drive-pacer-min-sleep,default = "1ms"
 
 sa_path = "/root/accounts" #Service_Accounts path,No slash at the end,default is "/root/accounts"
 
-run_args = ['--log-level=DEBUG', '--log-file=/root/icopy_cloner_debug.log'] # status flags
+log_folder_id = ""   # the google drive folder/drive id that you wish to put log file.
+
+run_args = ['--log-level=DEBUG'] # status flags
 
 [web]
 

@@ -13,6 +13,7 @@ from telegram.ext import (
 )
 from utils.load import _lang, _text
 from utils import (
+    load,
     messages as _msg, 
     restricted as _r, 
     keyboard as _KB, 
@@ -21,12 +22,21 @@ from utils import (
 
 @_r.restricted
 def start(update, context):
+    fav_count = load.db_counters.find_one({"_id": "fav_count_list"})
     _first_name = update.effective_user.first_name
-    update.effective_message.reply_text(
-        _text[_lang]["start"].replace("replace",_first_name)
-        + "\n"
-        + _text[_lang]["guide_to_menu"]
-    )
+    if fav_count is None or fav_count['fav_sum'] == 0:
+        update.effective_message.reply_text(
+            _text[_lang]["start"].replace("replace", _first_name)
+            + "\n"
+            + _text[_lang]["add_fav"]
+        )
+
+    if fav_count is not None and fav_count['fav_sum'] != 0:
+        update.effective_message.reply_text(
+            _text[_lang]["start"].replace("replace",_first_name)
+            + "\n"
+            + _text[_lang]["guide_to_menu"]
+        )
 
 @_r.restricted
 def menu(update, context):

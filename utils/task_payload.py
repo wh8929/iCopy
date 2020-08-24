@@ -45,10 +45,10 @@ def task_buffer(ns):
         wait_list = task_list.find({"status": 0})
         for task in wait_list:
             if _cfg["general"]["cloner"] == "fclone":
-                flags = ["--drive-server-side-across-configs", "--check-first", '-P', '--ignore-checksum' , '--stats=1s']
+                flags = ["--drive-server-side-across-configs", "--check-first", '-P', '--ignore-checksum', '--stats=1s']
 
             command = []
-
+            timestr = time.strftime("%Y_%m_%d-%H_%M_%S")
             cloner = _cfg["general"]["cloner"]
             option = _cfg["general"]["option"]
             remote = _cfg["general"]["remote"]
@@ -67,9 +67,10 @@ def task_buffer(ns):
             checkers = "--checkers=" + f"{_cfg['general']['parallel_c']}"
             transfers = "--transfers=" + f"{_cfg['general']['parallel_t']}"
             sa_sleep = "--drive-pacer-min-sleep=" + f"{_cfg['general']['min_sleep']}"
-
+            file_name = "{}-{}.log".format(src_name, timestr)
+            log = "--log-file={}.log".format(file_name)
             flags += _cfg["general"]["run_args"]
-            flags += [checkers, transfers, sa_sleep]
+            flags += [checkers, transfers, sa_sleep, log]
 
             command = [cloner, option, src_block, dst_block]
 
@@ -78,6 +79,8 @@ def task_buffer(ns):
             chat_id = task["chat_id"]
 
             task_process(chat_id, command, task, ns, src_name)
+
+            move_log(file_name)
 
             ns.x = 0
 
@@ -91,6 +94,15 @@ def task_buffer(ns):
 
         time.sleep(5)
 
+def move_log(file_name):
+    cloner = _cfg["general"]["cloner"]
+    option = "move"
+    remote = _cfg["general"]["remote"]
+    log_folder = _cfg["general"]["log_folder_id"]
+    dst_block = remote + ":" + "{" + log_folder + "}"
+    command = [cloner, option, file_name, dst_block]
+    run(command)
+    print("Log Uploaded")
 
 def task_process(chat_id, command, task, ns, src_name):
     # mark is in processing in db
@@ -397,6 +409,8 @@ def task_process(chat_id, command, task, ns, src_name):
             )
             + "\n"
             + _text[_lang]["is_killed_by_user"],
+            parse_mode=ParseMode.HTML,
+            disable_web_page_preview=True,
         )
 
         task_list.update_one(
@@ -435,6 +449,8 @@ def task_process(chat_id, command, task, ns, src_name):
             )
             + "\n"
             + _text[_lang]["is_interrupted_error"],
+            parse_mode=ParseMode.HTML,
+            disable_web_page_preview=True,
         )
 
         task_list.update_one(
