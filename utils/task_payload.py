@@ -37,8 +37,6 @@ interruption = 0
 dst_id = ""
 src_name = ""
 error = ""
-dst_endpoint_id = ""
-
 
 def task_buffer(ns):
     global dst_id
@@ -280,8 +278,13 @@ def task_process(chat_id, command, task, ns, src_name):
         time.sleep(4)
         prog_bar = _bar.status(100)
         dst_info = _func.getIDbypath(dst_id, src_name)
-        dst_endpoint_id = dst_info['dst_endpoint_id']
-        dst_endpoint_link = dst_info['dst_endpoint_link']
+        if dst_info != None:
+            dst_endpoint_id = dst_info['dst_endpoint_id']
+            dst_endpoint_link = dst_info['dst_endpoint_link']
+        else:
+            dst_endpoint_id = ""
+            dst_endpoint_link = ""
+
         bot.edit_message_text(
             chat_id=chat_id,
             message_id=message_id,
