@@ -36,6 +36,7 @@ icopyprocess = subprocess.Popen
 interruption = 0
 dst_id = ""
 src_name = ""
+error = ""
 
 
 def task_buffer(ns):
